@@ -10,16 +10,17 @@ claude/                   # symlinked to ~/.claude
   commands/               # slash commands, loaded on demand
     research.md           # /research — deep codebase read + research.md artifact
     plan.md               # /plan    — implementation plan + annotation cycle
-    implement.md          # /implement — execute plan, verify, commit
-  contexts/               # project-specific context, imported as needed
-    work-client.md        # current employer: TypeScript/Angular + Java Spring
-    [sideproject].md      # add per side project
+    implement.md          # /implement — execute approved plan
+  contexts/               # project-specific context, imported per session
+    talent-catalog.md     # Talent Catalog project
+    _template.md          # template for new projects
+PLAYBOOK.md               # human-facing workflow reference
 ```
 
 ## Setup on a new machine
 
 ```bash
-git clone git@github.com:YOUR_USERNAME/claude-config.git ~/projects/claude-config
+git clone git@github.com:samschlicht/claude-config.git ~/projects/claude-config
 mv ~/.claude ~/.claude.backup   # if it exists
 ln -s ~/projects/claude-config/claude ~/.claude
 ```
@@ -27,15 +28,18 @@ ln -s ~/projects/claude-config/claude ~/.claude
 ## Usage
 
 - `/research` — start any non-trivial ticket
-- `/plan`    — after reviewing research.md
-- `/implement` — after annotating and approving plan.md
+- `/plan` — after reviewing research.md
+- `/implement — go ahead` — after annotating and approving plan.md
 
-To activate a project context, add this to the top of a session or to a
-project-level CLAUDE.local.md (gitignored):
+To activate a project context, create a gitignored CLAUDE.local.md in the
+repo root:
 
 ```
-@~/.claude/contexts/work-client.md
+@~/.claude/contexts/[project].md
 ```
+
+See `claude/contexts/` for available context files, or copy `_template.md`
+to create a new one.
 
 ## Updating
 
