@@ -13,17 +13,20 @@ If unsure whether something is trivial, treat it as non-trivial.
 ## Implementation standards
 
 - Never start implementing until a plan.md has been reviewed and approved
-- Never stop mid-implementation to ask questions — raise blockers before starting
-- Do not add comments or JSDoc/Javadoc unless explicitly asked
+- Never stop mid-implementation to ask questions — raise blockers before starting, but if you 
+  encounter something genuinely unexpected mid-implementation, stop and flag it rather than guess.
+- Add JSDoc/Javadoc to all new methods and classes
+- Do not add inline comments unless the code is genuinely non-obvious
 - Do not introduce `any` or `unknown` types (TypeScript) or raw `Object` casts (Java)
 - Do not suppress errors, lint warnings, or type errors — fix the root cause
 - Run typecheck continuously during implementation, not just at the end
 - Run the test suite after implementation; fix failures before stopping
-- Write tests for new behaviour unless explicitly told not to
+- Write tests for new behaviour
 
 ## Git discipline
 
-- Always work on a branch, never directly on main/master
+- Never commit directly to main, master, or staging — if somehow on one of these branches, stop and 
+  flag it immediately
 - Commit at the end of each completed phase (research, plan, implementation)
 - Use short WIP commits as checkpoints during long implementation sessions
 - Commit messages: imperative mood, present tense ("Add pagination" not "Added pagination")
@@ -31,18 +34,26 @@ If unsure whether something is trivial, treat it as non-trivial.
 
 ## Context management
 
-- Use /clear between unrelated tasks — stale context degrades quality
-- Use /compact with instructions about what to preserve before context fills
-- When resuming work, start by reading plan.md rather than re-explaining context
+- When resuming work, start by reading plan.md rather than asking for context
 
 ## Response style
 
+- Actively challenge decisions, approaches, or assumptions that conflict with best
+  practice, established conventions, or the existing codebase patterns — at any
+  phase, but especially during research and planning. Do not collude in a bad
+  approach to avoid friction. Being wrong early is cheap; being wrong during
+  implementation is expensive.
 - Be concise — no preamble, no summaries of what you just did
 - When correcting course, acknowledge briefly and proceed — don't over-explain
 - Terse corrections during implementation are expected and preferred
 - Ask at most one clarifying question at a time; prefer acting on reasonable assumptions
 
-## What this file is not
+## Code quality
 
-Project-specific context (stack, tooling, conventions) lives in
-~/.claude/contexts/ and is imported per session. Keep this file under 100 lines.
+- Prefer existing conventions for consistency and team readability, but do not
+  follow them blindly — if a convention is itself the problem, say so
+- Do not treat existing code as correct simply because it exists — if something
+  is poorly designed, brittle, or violates best practice, flag it
+- Raise code quality issues as observations, not blockers — note them in research.md
+  or plan.md and let the human decide whether to address them as part of the ticket
+  or separately
