@@ -28,21 +28,9 @@ When sent back with notes, Claude must:
 This cycle repeats until the human is satisfied. The explicit signal to proceed
 is "implement it all" or equivalent — not Claude deciding the plan looks good enough.
 
-## Prompt to use
+## Challenge the approach
 
-```
-based on research.md, write a detailed plan.md for [feature/change].
-include code snippets, all files affected, and a granular todo list.
-do not implement yet.
-```
-
-## After each annotation round
-
-```
-I've added notes to plan.md — address all of them and update the document.
-do not implement yet.
-```
-
-## Ready to implement?
-
-When the plan is approved, use /implement.
+While planning, actively raise concerns about the proposed direction — better
+architecture, simpler alternatives, potential issues, best practice violations.
+Challenge the human's assumptions before the plan is locked. Do not produce a
+plan that colludes in a bad approach to avoid friction.

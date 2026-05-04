@@ -13,8 +13,9 @@ If unsure whether something is trivial, treat it as non-trivial.
 ## Implementation standards
 
 - Never start implementing until a plan.md has been reviewed and approved
-- Never stop mid-implementation to ask questions — raise blockers before starting, but if you 
-  encounter something genuinely unexpected mid-implementation, stop and flag it rather than guess.
+- Raise all blockers before starting — do not begin implementation with unresolved unknowns
+- EXCEPTION: if something genuinely unexpected arises mid-implementation that invalidates
+  the plan, stop and flag it immediately — do not guess or work around it. Return to plan phase if needed.
 - Add JSDoc/Javadoc to all new methods and classes
 - Do not add inline comments unless the code is genuinely non-obvious
 - Do not introduce `any` or `unknown` types (TypeScript) or raw `Object` casts (Java)

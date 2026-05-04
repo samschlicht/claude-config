@@ -14,24 +14,12 @@ Look for: existing patterns to follow, gotchas to avoid, related code
 that will be affected by changes, anything that isn't obvious from
 function signatures alone.
 
-When done, write everything you learned into `research.md` in the project root.
+When done, write everything you learned into research.md in the project root.
 This is a review artifact — write it so that a human can read it and verify
 your understanding is correct before any planning begins.
 
+While researching, note any code quality issues, poor patterns, or best practice
+violations encountered — record them in a dedicated section of research.md.
+These are observations for the human to triage, not blockers.
+
 Do not plan. Do not implement. Do not suggest changes yet.
-
-## Prompt to use
-
-Adapt and paste:
-
-```
-read [folder/file/area] deeply — understand how it works, what it depends on,
-its conventions, edge cases, and intricacies. when done, write a detailed
-research.md with everything you found. do not plan or implement yet.
-```
-
-## After research
-
-Review research.md yourself. Correct any misunderstandings with inline notes
-before moving to /plan. The quality of the plan depends entirely on the
-quality of the research.
