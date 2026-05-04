@@ -2,6 +2,8 @@
 
 Personal Claude Code configuration. Portable across jobs and projects.
 
+Much indebted to Boris Tane's [How I use Claude Code](https://boristane.com/blog/how-i-use-claude-code/).
+
 ## Structure
 
 ```
