@@ -90,7 +90,7 @@ Ask yourself:
 5. If something goes badly wrong: revert cleanly, narrow the scope, re-approach.
    Patching a bad implementation is usually more expensive than reverting it.
 6. When done and green, review the commit message before accepting it
-7. To open a PR: `write a PR description from plan.md`
+7. If interrupted and resuming: `carry on from where you stopped`
 
 ---
 
@@ -116,6 +116,32 @@ Ask yourself:
 
 ---
 
+## Before opening a PR
+
+Use Claude Code to review your own diff before human reviewers see it.
+
+1. Save the diff to a temp file:
+   git diff main > /tmp/pr-diff.txt
+
+2. In Claude Code:
+   `review the diff in /tmp/pr-diff.txt — check against AGENTS.md conventions,
+   flag any bugs, code quality issues, or anything that shouldn't go to review`
+
+3. Address anything worth fixing before pushing
+
+For small diffs you can also pipe directly to clipboard and paste:
+git diff main | pbcopy
+
+Or if the PR is already open on GitHub, append .diff to the PR URL for a
+clean plaintext version to copy.
+
+Note: AI catches mechanical issues well — bugs, convention violations, obvious
+oversights. It won't catch architectural or business logic concerns the way a
+human reviewer will. The goal is to not waste your teammates' review time on
+things you could have caught yourself.
+
+---
+
 ## When things go wrong
 
 Claude is going in the wrong direction mid-implementation:
@@ -136,7 +162,6 @@ Claude keeps ignoring an instruction:
 The session has gone badly and there's a mess:
 - For uncommitted changes: `git checkout .`
 - For committed changes: `git revert HEAD` or `git reset --soft HEAD~1`
-- If the branch is unrecoverable: delete it, create a fresh one, start over
 - Don't try to salvage a bad implementation — start the phase again
 - If the branch is unrecoverable: delete it, create a fresh one, start over
 
@@ -165,15 +190,16 @@ git push
 
 ## Quick reference
 
-| Situation                   | Action                                       |
-|-----------------------------|----------------------------------------------|
-| Starting non-trivial ticket | `/research` then `/plan` then `/implement`   |
-| Starting trivial ticket     | Describe task directly                       |
-| Switching tasks             | `/clear`                                     |
-| Context getting full        | `/compact` with preservation instructions    |
-| Resuming work               | `read plan.md and tell me where we are`      |
-| Wrong direction             | Interrupt, correct tersely, revert if needed |
-| Plan invalidated mid-impl   | Stop, fix plan.md, re-trigger                |
-| Session gone wrong          | `git checkout .` then start phase again      |
-| Resuming after interruption | `carry on from where you stopped`            |
-| Opening a PR                | `write a PR description from plan.md`        |
+| Situation                   | Action                                                    |
+|-----------------------------|-----------------------------------------------------------|
+| Starting non-trivial ticket | `/research` then `/plan` then `/implement`                |
+| Starting trivial ticket     | Describe task directly                                    |
+| Switching tasks             | `/clear`                                                  |
+| Context getting full        | `/compact` with preservation instructions                 |
+| Resuming work               | `read plan.md and tell me where we are`                   |
+| Resuming after interruption | `carry on from where you stopped`                         |
+| Wrong direction             | Interrupt, correct tersely, revert if needed              |
+| Plan invalidated mid-impl   | Stop, fix plan.md, re-trigger                             |
+| Session gone wrong          | `git checkout .` then start phase again                   |
+| Before opening a PR         | `git diff main > /tmp/pr-diff.txt`, review in Claude Code |
+| Getting a PR description    | `write a PR description from plan.md`                     |
