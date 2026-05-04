@@ -25,8 +25,8 @@ When sent back with notes, Claude must:
 - Update plan.md in place
 - Not implement anything
 
-This cycle repeats until the human is satisfied. The explicit signal to proceed
-is "implement it all" or equivalent — not Claude deciding the plan looks good enough.
+This cycle repeats until the human sends: `/implement — go ahead`
+That is the only signal to proceed — do not begin implementation otherwise.
 
 ## Challenge the approach
 

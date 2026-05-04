@@ -2,22 +2,36 @@
 
 One-line description of what this project is.
 
+## Existing project instructions
+
+- Does this project have an AGENTS.md or similar? If so: @path/to/AGENTS.md
+- Note any conflicts with your personal preferences here
+
+## Structure
+
+- [key directories and what lives in them]
+
 ## Stack
 
 - Language/runtime:
 - Framework:
-- Test runner + command:
+- Build command:
 - Lint command:
-- Build/typecheck command:
+- Typecheck command:
+
+## Tests
+
+- Unit test framework + command:
+- Integration/e2e tests — command, prerequisites, gotchas:
+- Do not run [X] unless explicitly asked — requires [setup/Docker/credentials]
 
 ## Conventions
 
-- [key convention]
-- [key convention]
+- [key convention — things Claude would get wrong without being told]
 
 ## Off-limits
 
-- [things Claude should not touch or change without explicit instruction]
+- [things Claude should never touch without explicit instruction]
 
 ## Notes
 

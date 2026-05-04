@@ -5,28 +5,28 @@ I've forgotten my own process.
 
 ---
 
+## Before you start a ticket
+
+Ask yourself:
+- Is this trivial (single function, rename, typo, one-liner)? If yes, skip the
+  pipeline — just describe the task directly in Claude Code.
+- Do I understand the ticket well enough to direct research? If not, read the
+  ticket and any linked context first — Claude can't compensate for your own
+  unclear understanding of what's needed.
+- Are there unknowns that will block implementation? Surface them now, not
+  mid-implementation.
+
+---
+
 ## Starting a new ticket
 
 1. Open GitHub, create a branch from the ticket, check it out locally
-2. Open Claude Code in the repo root
-3. For non-trivial work: type `/research` and follow the prompt
-4. For trivial changes (single function, rename, typo): just describe the task directly
-
----
-
-## Session hygiene
-
-- **Between unrelated tasks:** type `/clear` to start fresh — stale context from a previous task degrades quality on the next one
-- **Before context fills:** type `/compact` and tell Claude what to preserve, e.g. "focus on the plan and key decisions, discard file read contents"
-- **Don't let Claude run too long without a checkpoint** — long sessions with full context windows produce worse output
-
----
-
-## Resuming work mid-ticket
-
-1. Open Claude Code on the correct branch
-2. Say: "read plan.md and tell me where we are"
-3. Continue from there — no need to re-explain context
+2. Activate the project context — check that CLAUDE.local.md exists in the repo
+   root pointing to the right context file. See ~/.claude/contexts/ for available
+   options. If missing, create it: echo "@~/.claude/contexts/[project].md" > CLAUDE.local.md
+3. Open Claude Code in the repo root
+4. For non-trivial work: proceed to Research phase
+5. For trivial changes: describe the task directly and skip to implementation
 
 ---
 
@@ -34,15 +34,21 @@ I've forgotten my own process.
 
 1. Type `/research` in Claude Code
 2. Paste this prompt, adapted to your ticket:
-   "read [folder/file/area] deeply — understand how it works, what it depends on,
-   its conventions, edge cases, and intricacies. when done, write a detailed
-   research.md with everything you found. do not plan or implement yet."
+   `read [folder/file/area] deeply — understand how it works, what it depends
+   on, its conventions, edge cases, and intricacies. when done, write a
+   detailed research.md with everything you found. do not plan or implement.`
 3. While Claude works, don't interrupt — let it read widely
-4. When research.md is ready, read it yourself carefully
-5. Add inline corrections for anything Claude got wrong — be specific
-6. Check the code quality observations section — triage each one: fix in this
-   ticket, create a separate ticket, or consciously accept the debt
-7. Only move to /plan when you're satisfied the understanding is accurate
+4. When research.md is ready, read it yourself carefully:
+    - Is Claude's understanding of the system accurate?
+    - Has it identified the right files and dependencies?
+    - Has it spotted the right patterns to follow?
+5. Add inline corrections for anything wrong — be specific, not general
+6. Check the code quality observations section — triage each one:
+    - Fix as part of this ticket
+    - Create a separate ticket
+    - Consciously accept the debt
+7. Only move to `/plan` when you're confident the understanding is accurate —
+   a bad research phase produces a bad plan, which produces bad code
 
 ---
 
@@ -50,40 +56,124 @@ I've forgotten my own process.
 
 1. Type `/plan` in Claude Code
 2. Paste this prompt, adapted to your ticket:
-   "based on research.md, write a detailed plan.md for [feature/change].
-   include code snippets, all files affected, and a granular todo list.
-   do not implement yet."
-3. When plan.md is ready, open it in IntelliJ and read it carefully
-4. Add inline notes directly in the file — corrections, constraints, rejected
+   `based on research.md, write a detailed plan.md for [feature/change].
+   include actual code snippets (not pseudocode), all files affected, what
+   could go wrong, and a granular todo list by phase. do not implement yet.`
+3. When plan.md is ready, open it in IntelliJ and read it carefully:
+    - Does the approach fit the existing system?
+    - Are all affected files identified?
+    - Do the code snippets look right?
+    - Has Claude challenged anything? If so, take it seriously.
+4. Add inline notes directly in plan.md — corrections, constraints, rejected
    approaches, domain knowledge Claude wouldn't have
-5. Pay attention to any concerns Claude raised — it's required to challenge
-   bad approaches, so if it flags something, take it seriously
-6. Return to Claude and say:
-   "I've added notes to plan.md — address all of them and update the document.
-   do not implement yet."
-7. Repeat steps 3-6 until satisfied
-8. The signal to proceed is explicit — say "implement it all" or equivalent.
-   Never let Claude decide the plan is good enough on its own.
+5. Return to Claude:
+   `I've added notes to plan.md — address all of them and update the document.
+   do not implement yet.`
+6. Repeat until the plan is something you'd be comfortable handing to a
+   junior developer to implement
+7. When the plan is approved, type: `/implement — go ahead`
+   Never let Claude decide the plan is ready on its own.
 
 ---
 
 ## Implement phase
 
-1. When the plan is approved, say "implement it all" — this is the explicit trigger
-2. Watch progress — Claude will mark tasks complete in plan.md as it goes
-3. Corrections during implementation should be terse — Claude has full context:
+1. Type `/implement — go ahead`
+2. Watch progress — Claude marks tasks complete in plan.md as it goes
+3. Corrections should be terse — Claude has full context of the plan:
     - "you missed the deduplicateByTitle function"
     - "that belongs in the service layer, not the controller"
-    - For UI work: "wider" / "still misaligned" + attach a screenshot
-4. If Claude flags a genuine blocker, stop — don't push through it
-    - Assess whether to return to plan phase or revert and re-approach
-    - Do not let Claude patch over a bad direction
-5. If something goes badly wrong: revert cleanly, narrow the scope, re-approach
-6. When done and green, Claude will commit — review the commit message
-7. To open a PR, say "write a PR description from plan.md"
+    - For UI: "wider" / "still misaligned" + attach a screenshot
+4. If Claude flags a genuine blocker — stop. Don't push through it.
+   Assess: return to plan phase, or revert and re-approach entirely.
+   Do not let Claude patch over a bad direction.
+5. If something goes badly wrong: revert cleanly, narrow the scope, re-approach.
+   Patching a bad implementation is usually more expensive than reverting it.
+6. When done and green, review the commit message before accepting it
+7. To open a PR: `write a PR description from plan.md`
 
 ---
 
-## More to come
+## Session hygiene
 
-This file will be updated as we review each config file.
+- Between unrelated tasks: type `/clear` — stale context from a previous
+  task actively degrades quality on the next one
+- Before context fills: type `/compact` and tell Claude what to preserve:
+  `/compact — focus on the plan and key decisions, discard file read contents`
+- Watch for degradation — if Claude starts making uncharacteristic mistakes
+  or ignoring instructions, context is probably too full. Compact or clear.
+- Long sessions aren't always better — for a new unrelated problem,
+  a fresh session often outperforms a long one with polluted context
+
+---
+
+## Resuming work mid-ticket
+
+1. Open Claude Code on the correct branch
+2. Say: `read plan.md and tell me where we are`
+3. Claude will orient from the artifact — no need to re-explain context
+4. If the session feels confused, compact first then resume
+
+---
+
+## When things go wrong
+
+Claude is going in the wrong direction mid-implementation:
+- Press Escape to interrupt
+- Say what's wrong tersely — "wrong layer" / "that's already handled in X"
+- If it's a fundamental misunderstanding, revert and return to plan phase
+
+The plan turns out to be wrong mid-implementation:
+- Stop — don't let Claude improvise its way through
+- Return to plan phase, update plan.md, then re-trigger implementation
+
+Claude keeps ignoring an instruction:
+- Check CLAUDE.md isn't too long — bloat causes rules to get lost
+- Check the wording is unambiguous
+- Add emphasis: "IMPORTANT:" or "NEVER:" if needed
+- If it's a one-off, just correct it in session
+
+The session has gone badly and there's a mess:
+- For uncommitted changes: `git checkout .`
+- For committed changes: `git revert HEAD` or `git reset --soft HEAD~1`
+- If the branch is unrecoverable: delete it, create a fresh one, start over
+- Don't try to salvage a bad implementation — start the phase again
+- If the branch is unrecoverable: delete it, create a fresh one, start over
+
+---
+
+## Keeping the config healthy
+
+The config is only useful if it reflects how you actually work. Treat it like
+code — review it when things go wrong, prune it when things change.
+
+- After a session that went well: did anything work unusually well? Encode it.
+- After a session that went badly: what instruction was missing or wrong?
+  Fix it before the next session.
+- Periodically: re-read CLAUDE.md. If a line no longer causes mistakes when
+  removed mentally, cut it — dead rules dilute live ones.
+- When switching projects: make sure the right context file is active in
+  CLAUDE.local.md before starting.
+
+To update and push config changes:
+cd ~/projects/claude-config
+git add -A
+git commit -m "Update config — [what changed and why]"
+git push
+
+---
+
+## Quick reference
+
+| Situation                   | Action                                       |
+|-----------------------------|----------------------------------------------|
+| Starting non-trivial ticket | `/research` then `/plan` then `/implement`   |
+| Starting trivial ticket     | Describe task directly                       |
+| Switching tasks             | `/clear`                                     |
+| Context getting full        | `/compact` with preservation instructions    |
+| Resuming work               | `read plan.md and tell me where we are`      |
+| Wrong direction             | Interrupt, correct tersely, revert if needed |
+| Plan invalidated mid-impl   | Stop, fix plan.md, re-trigger                |
+| Session gone wrong          | `git checkout .` then start phase again      |
+| Resuming after interruption | `carry on from where you stopped`            |
+| Opening a PR                | `write a PR description from plan.md`        |
