@@ -39,7 +39,7 @@
     "remote-control": 13
   },
   "promptQueueUseCount": 11,
-  "btwUseCount": 6,
+  "btwUseCount": 8,
   "cachedGrowthBookFeatures": {
     "tengu_prism_ledger": false,
     "tengu_workout2": true,
@@ -666,6 +666,14 @@
     "research": {
       "usageCount": 1,
       "lastUsedAt": 1777939845323
+    },
+    "plan": {
+      "usageCount": 1,
+      "lastUsedAt": 1777943645494
+    },
+    "implement": {
+      "usageCount": 1,
+      "lastUsedAt": 1777946877452
     }
   },
   "seenNotifications": {},
@@ -683,5 +691,6 @@
     "tengu_timber_lark",
     "tengu_willow_prism"
   ],
-  "closedIssuesLastChecked": 1777939838283
+  "closedIssuesLastChecked": 1777939838283,
+  "remoteControlUpsellSeenCount": 1
 }

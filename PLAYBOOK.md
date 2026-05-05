@@ -129,17 +129,20 @@ Ask yourself:
 
 Use Claude Code to review your own diff before human reviewers see it.
 
-1. Save the diff to a temp file:
-   `git diff main > /tmp/pr-diff.txt`
+1. Check the base branch for this repo — it varies by project. For Talent
+   Catalog it's `staging`. If unsure: `git remote show origin | grep HEAD`
 
-2. In Claude Code:
+2. Save the diff to a temp file:
+   `git diff [base-branch] > /tmp/pr-diff.txt`
+
+3. In Claude Code:
    `review the diff in /tmp/pr-diff.txt — check against AGENTS.md conventions,
    flag any bugs, code quality issues, or anything that shouldn't go to review`
 
-3. Address anything worth fixing before pushing
+4. Address anything worth fixing before pushing
 
 For small diffs you can also pipe directly to clipboard and paste:
-`git diff main | pbcopy`
+`git diff [base-branch] | pbcopy`
 
 Or if the PR is already open on GitHub, append .diff to the PR URL for a
 clean plaintext version to copy.
@@ -205,16 +208,16 @@ git push
 
 ## Quick reference
 
-| Situation                   | Action                                                    |
-|-----------------------------|-----------------------------------------------------------|
-| Starting non-trivial ticket | `/research` then `/plan` then `/implement`                |
-| Starting trivial ticket     | Describe task directly                                    |
-| Switching tasks             | `/clear`                                                  |
-| Context getting full        | `/compact` with preservation instructions                 |
-| Resuming work               | `read plan.md and tell me where we are`                   |
-| Resuming after interruption | `carry on from where you stopped`                         |
-| Wrong direction             | Interrupt, correct tersely, revert if needed              |
-| Plan invalidated mid-impl   | Stop, fix plan.md, re-trigger                             |
-| Session gone wrong          | `git checkout .` then start phase again                   |
-| Before opening a PR         | `git diff main > /tmp/pr-diff.txt`, review in Claude Code |
-| Getting a PR description    | `write a PR description from plan.md`                     |
+| Situation                   | Action                                                              |
+|-----------------------------|---------------------------------------------------------------------|
+| Starting non-trivial ticket | `/research` then `/plan` then `/implement`                          |
+| Starting trivial ticket     | Describe task directly                                              |
+| Switching tasks             | `/clear`                                                            |
+| Context getting full        | `/compact` with preservation instructions                           |
+| Resuming work               | `read plan.md and tell me where we are`                             |
+| Resuming after interruption | `carry on from where you stopped`                                   |
+| Wrong direction             | Interrupt, correct tersely, revert if needed                        |
+| Plan invalidated mid-impl   | Stop, fix plan.md, re-trigger                                       |
+| Session gone wrong          | `git checkout .` then start phase again                             |
+| Before opening a PR         | `git diff [base-branch] > /tmp/pr-diff.txt`, review in Claude Code |
+| Getting a PR description    | `write a PR description from plan.md`                               |
