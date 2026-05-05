@@ -2,8 +2,6 @@
 
 Personal Claude Code configuration. Portable across jobs and projects.
 
-Much indebted to Boris Tane's [How I use Claude Code](https://boristane.com/blog/how-i-use-claude-code/).
-
 ## Structure
 
 ```
@@ -27,11 +25,23 @@ mv ~/.claude ~/.claude.backup   # if it exists
 ln -s ~/projects/claude-config/claude ~/.claude
 ```
 
+Add working artifacts to your global gitignore so they don't show as untracked
+in every repo:
+
+```bash
+echo "research.md" >> ~/.gitignore_global
+echo "plan.md" >> ~/.gitignore_global
+echo "CLAUDE.local.md" >> ~/.gitignore_global
+git config --global core.excludesfile ~/.gitignore_global
+```
+
 ## Usage
 
 - `/research` — start any non-trivial ticket
 - `/plan` — after reviewing research.md
 - `/implement — go ahead` — after annotating and approving plan.md
+  (the `— go ahead` is intentional — it signals the plan is approved and
+  Claude should proceed without further checking)
 
 To activate a project context, create a gitignored CLAUDE.local.md in the
 repo root:
@@ -47,3 +57,7 @@ to create a new one.
 
 Treat this like code. When something repeatedly goes wrong or right, update
 the relevant file. Commit with a note about what changed and why.
+
+## Credits
+
+Much indebted to Boris Tane's [How I use Claude Code](https://boristane.com/blog/how-i-use-claude-code/).

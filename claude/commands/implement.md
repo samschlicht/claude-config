@@ -12,4 +12,3 @@ Implement everything in plan.md from top to bottom.
 - At the end of each phase, mark the phase complete and commit with a
   descriptive message before moving to the next phase
 - Do not stop to ask questions — all decisions were made in the plan
-
