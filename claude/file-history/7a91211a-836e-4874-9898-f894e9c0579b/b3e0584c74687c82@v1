@@ -1,0 +1,81 @@
+# Relocation Auto-Fetch Tests Plan
+
+## Context
+
+Two conditions gate the relocation info auto-fetch in `createOrUpdateCandidateOpportunities`:
+
+**Outer trigger** — should we even attempt a fetch?
+```java
+relocationInfo == null
+    && stage != null
+    && stage.isAtOrBeyondAcceptance()
+    && (!stage.isClosed() || stage.isEmployed())
+```
+
+**Inner guard** — having fetched the opp, should we use it?
+```java
+candidateOpp != null && !candidateOpp.getStage().isAtOrBeyondAcceptance()
+```
+
+Both conditions are currently embedded in `createOrUpdateCandidateOpportunities`, which is too
+heavy to test directly (requires full SF API mock infrastructure). The plan is to extract each
+condition into a package-private static method so it can be unit-tested cleanly.
+
+---
+
+## Step 1 — `CandidateOpportunityStageTest` (new file)
+
+Test `isAtOrBeyondAcceptance()` across the key stages:
+
+- [ ] `offer` → false (just below the threshold)
+- [ ] `acceptance` → true (the threshold itself)
+- [ ] `relocating` → true (open, employed, beyond acceptance)
+- [ ] `durableSolution` → true (closed, employed, won)
+- [ ] `noJobOffer` → true (closed, not employed — ordinal beyond acceptance, filtered elsewhere)
+- [ ] `candidateLeavesDestination` → true (closed, employed)
+
+---
+
+## Step 2 — Extract and test outer trigger: `shouldAutoFetchRelocationInfo`
+
+Extract to package-private static in `SalesforceServiceImpl`:
+```java
+static boolean shouldAutoFetchRelocationInfo(
+    Map<String, Integer> existingRelocationInfo,
+    CandidateOpportunityStage stage)
+```
+
+Scenarios:
+
+- [ ] relocationInfo already present → false
+- [ ] stage is null → false
+- [ ] stage is `offer` (below acceptance) → false
+- [ ] stage is `noJobOffer` (closed, not employed) → false
+- [ ] stage is `candidateRejectsOffer` (closed, not employed) → false
+- [ ] stage is `acceptance` → true
+- [ ] stage is `relocating` (open, employed, beyond) → true
+- [ ] stage is `candidateLeavesDestination` (closed, employed) → true
+- [ ] stage is `durableSolution` (closed, employed, won) → true
+
+---
+
+## Step 3 — Extract and test inner guard: `isPreviousStageBeforeAcceptance`
+
+Extract to package-private static in `SalesforceServiceImpl`:
+```java
+static boolean isPreviousStageBeforeAcceptance(@Nullable CandidateOpportunity candidateOpp)
+```
+
+Scenarios:
+
+- [ ] candidateOpp is null → false (nothing to fetch)
+- [ ] previousStage is `offer` (below acceptance) → true (should fetch)
+- [ ] previousStage is `acceptance` (at threshold) → false (already captured)
+- [ ] previousStage is `relocating` (beyond) → false (already captured)
+
+---
+
+## Step 4 — Wire extracted methods back into `createOrUpdateCandidateOpportunities`
+
+Replace the inline conditions with calls to the two extracted methods. No behaviour change —
+purely structural.

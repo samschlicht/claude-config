@@ -35,7 +35,8 @@
     "permissions": 11,
     "rename-conversation": 11,
     "custom-commands": 11,
-    "voice-mode": 12
+    "voice-mode": 12,
+    "remote-control": 13
   },
   "promptQueueUseCount": 11,
   "btwUseCount": 6,
@@ -529,7 +530,10 @@
         "hook_duration_ms_p95": 0.05000000000000071,
         "hook_duration_ms_p99": 0.8099999999999987
       },
-      "lastGracefulShutdown": false
+      "lastGracefulShutdown": false,
+      "lastHintSessionId": "7a91211a-836e-4874-9898-f894e9c0579b",
+      "lastSessionFirstPrompt": "/research  I'm working on ticket #3045 — It's for users workig with large submission lists that would like to be able to view all the candidates (or at least many more) on a single page, to facilitate",
+      "lastSessionModified": 1777940278102
     },
     "/Users/work/talentcatalog/.claude/worktrees/sharp-hofstadter": {
       "allowedTools": [],
@@ -679,5 +683,6 @@
     "tengu_timber_lark",
     "tengu_willow_prism"
   ],
-  "closedIssuesLastChecked": 1777939838283
+  "closedIssuesLastChecked": 1777939838283,
+  "remoteControlUpsellSeenCount": 1
 }
