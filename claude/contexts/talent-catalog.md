@@ -47,3 +47,9 @@ Integration tests:
 - Do not introduce new architectural layers without discussion
 - Do not modify dependency versions unless that is the task
 - Do not add logging statements unless asked
+
+## Git
+
+- Base branch is `staging` — not `main`. PRs are raised against `staging`.
+- When asked to write a PR description, follow the AGENTS.md format:
+  description of change, list of modified components, tests added or updated

@@ -36,3 +36,4 @@
 {"display":"Perhaps just give it a bit more space above and a little less below (so it looks more part of the pagination than the buttons)","pastedContents":{},"timestamp":1777961526549,"project":"/Users/work/talentcatalog","sessionId":"7a91211a-836e-4874-9898-f894e9c0579b"}
 {"display":"That's better, and yes, check the tests.","pastedContents":{},"timestamp":1777961603259,"project":"/Users/work/talentcatalog","sessionId":"7a91211a-836e-4874-9898-f894e9c0579b"}
 {"display":"/compact","pastedContents":{},"timestamp":1777962524821,"project":"/Users/work/talentcatalog","sessionId":"7a91211a-836e-4874-9898-f894e9c0579b"}
+{"display":"review the diff in /tmp/pr-diff.txt — check against AGENTS.md conventions, flag any bugs, code quality issues, or anything that shouldn't go to review","pastedContents":{},"timestamp":1777962588662,"project":"/Users/work/talentcatalog","sessionId":"7a91211a-836e-4874-9898-f894e9c0579b"}
