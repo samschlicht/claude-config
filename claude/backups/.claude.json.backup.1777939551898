@@ -37,7 +37,7 @@
     "custom-commands": 11,
     "voice-mode": 12
   },
-  "promptQueueUseCount": 10,
+  "promptQueueUseCount": 11,
   "btwUseCount": 6,
   "cachedGrowthBookFeatures": {
     "tengu_marble_anvil": true,
@@ -642,5 +642,11 @@
   "migrationVersion": 11,
   "deepLinkTerminal": "Terminal",
   "opus47LaunchSeenCount": 2,
-  "additionalModelCostsCache": {}
+  "additionalModelCostsCache": {},
+  "skillUsage": {
+    "review": {
+      "usageCount": 1,
+      "lastUsedAt": 1777936317020
+    }
+  }
 }

@@ -187,6 +187,10 @@ code — review it when things go wrong, prune it when things change.
   removed mentally, cut it — dead rules dilute live ones.
 - When switching projects: make sure the right context file is active in
   CLAUDE.local.md before starting.
+- When the team switches to Linear: set up the Linear MCP server so Claude
+  can read tickets directly. Generate a Personal API Key at linear.app/settings/api
+  and add it to `~/.claude/settings.json` (already gitignored). The research
+  prompt then becomes: "read Linear ticket ENG-3045 and read [area] deeply..."
 
 To update and push config changes:
 ```
