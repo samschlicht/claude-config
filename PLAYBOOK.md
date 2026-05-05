@@ -15,6 +15,8 @@ Ask yourself:
   unclear understanding of what's needed.
 - Are there unknowns that will block implementation? Surface them now, not
   mid-implementation.
+- Delete any existing research.md and plan.md from previous tickets — stale
+  artifacts confuse Claude at the start of a new session.
 
 ---
 
@@ -22,7 +24,7 @@ Ask yourself:
 
 1. Open GitHub, create a branch from the ticket, check it out locally
 2. Activate the project context — check that CLAUDE.local.md exists in the repo
-   root pointing to the right context file. See `~/.claude/contexts/` for available options. 
+   root pointing to the right context file. See `~/.claude/contexts/` for available options.
    If missing, create it: `echo "@~/.claude/contexts/[project].md" > CLAUDE.local.md`
 3. Open Claude Code in the repo root
 4. For non-trivial work: proceed to Research phase
@@ -32,22 +34,28 @@ Ask yourself:
 
 ## Research phase
 
-1. Type `/research` in Claude Code
-2. Paste this prompt, adapted to your ticket:
-   `read [folder/file/area] deeply — understand how it works, what it depends
+1. Type `/research` followed immediately by your context in the same message —
+   do not hit enter after `/research` alone or Claude will start exploring blindly.
+   Use this template:
+   ```
+   /research
+
+   I'm working on ticket #[number] — [brief description].
+   read [folder/file/area] deeply — understand how it works, what it depends
    on, its conventions, edge cases, and intricacies. when done, write a
-   detailed research.md with everything you found. do not plan or implement.`
-3. While Claude works, don't interrupt — let it read widely
-4. When research.md is ready, read it yourself carefully:
+   detailed research.md with everything you found. do not plan or implement.
+   ```
+2. While Claude works, don't interrupt — let it read widely
+3. When research.md is ready, read it yourself carefully:
     - Is Claude's understanding of the system accurate?
     - Has it identified the right files and dependencies?
     - Has it spotted the right patterns to follow?
-5. Add inline corrections for anything wrong — be specific, not general
-6. Check the code quality observations section — triage each one:
+4. Add inline corrections for anything wrong — be specific, not general
+5. Check the code quality observations section — triage each one:
     - Fix as part of this ticket
     - Create a separate ticket
     - Consciously accept the debt
-7. Only move to `/plan` when you're confident the understanding is accurate —
+6. Only move to `/plan` when you're confident the understanding is accurate —
    a bad research phase produces a bad plan, which produces bad code
 
 ---
@@ -121,7 +129,7 @@ Ask yourself:
 Use Claude Code to review your own diff before human reviewers see it.
 
 1. Save the diff to a temp file:
-   git diff main > /tmp/pr-diff.txt
+   `git diff main > /tmp/pr-diff.txt`
 
 2. In Claude Code:
    `review the diff in /tmp/pr-diff.txt — check against AGENTS.md conventions,
@@ -130,7 +138,7 @@ Use Claude Code to review your own diff before human reviewers see it.
 3. Address anything worth fixing before pushing
 
 For small diffs you can also pipe directly to clipboard and paste:
-git diff main | pbcopy
+`git diff main | pbcopy`
 
 Or if the PR is already open on GitHub, append .diff to the PR URL for a
 clean plaintext version to copy.
@@ -181,10 +189,12 @@ code — review it when things go wrong, prune it when things change.
   CLAUDE.local.md before starting.
 
 To update and push config changes:
+```
 cd ~/projects/claude-config
 git add -A
 git commit -m "Update config — [what changed and why]"
 git push
+```
 
 ---
 
