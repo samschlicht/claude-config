@@ -22,8 +22,8 @@ Ask yourself:
 
 1. Open GitHub, create a branch from the ticket, check it out locally
 2. Activate the project context — check that CLAUDE.local.md exists in the repo
-   root pointing to the right context file. See ~/.claude/contexts/ for available
-   options. If missing, create it: echo "@~/.claude/contexts/[project].md" > CLAUDE.local.md
+   root pointing to the right context file. See `~/.claude/contexts/` for available options. 
+   If missing, create it: `echo "@~/.claude/contexts/[project].md" > CLAUDE.local.md`
 3. Open Claude Code in the repo root
 4. For non-trivial work: proceed to Research phase
 5. For trivial changes: describe the task directly and skip to implementation
