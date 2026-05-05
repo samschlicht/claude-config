@@ -50,7 +50,7 @@ Ask yourself:
     - Is Claude's understanding of the system accurate?
     - Has it identified the right files and dependencies?
     - Has it spotted the right patterns to follow?
-4. Add inline corrections for anything wrong — be specific, not general
+4. Add inline corrections using the `# SAM:` prefix for anything wrong — be specific, not general
 5. Check the code quality observations section — triage each one:
     - Fix as part of this ticket
     - Create a separate ticket
@@ -72,11 +72,12 @@ Ask yourself:
     - Are all affected files identified?
     - Do the code snippets look right?
     - Has Claude challenged anything? If so, take it seriously.
-4. Add inline notes directly in plan.md — corrections, constraints, rejected
-   approaches, domain knowledge Claude wouldn't have
+4. Add inline notes directly in plan.md using the `# SAM:` prefix — corrections,
+   constraints, rejected approaches, domain knowledge Claude wouldn't have.
+   Example: `# SAM: this pattern was deprecated, use CandidateOpportunityService instead`
 5. Return to Claude:
-   `I've added notes to plan.md — address all of them and update the document.
-   do not implement yet.`
+   `I've added notes to plan.md — address all # SAM: comments and remove them
+   when done. do not implement yet.`
 6. Repeat until the plan is something you'd be comfortable handing to a
    junior developer to implement
 7. When the plan is approved, type: `/implement — go ahead`
