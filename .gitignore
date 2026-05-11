@@ -1,2 +1,6 @@
-.idea/
-.DS_Store
+claude/backups/
+claude/sessions/
+claude/shell-snapshots/
+claude/projects/
+claude/history.jsonl
+claude/settings.json
