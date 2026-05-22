@@ -10,7 +10,8 @@ claude/                   # symlinked to ~/.claude
   commands/               # slash commands, loaded on demand
     research.md           # /research — deep codebase read + research.md artifact
     plan.md               # /plan    — implementation plan + annotation cycle
-    implement.md          # /implement — execute approved plan
+    implement.md          # /implement — execute approved plan, pausing after each phase for review
+    pr-description.md     # /pr-description — write pr-description.md when done
   contexts/               # project-specific context, imported per session
     talent-catalog.md     # Talent Catalog project
     _template.md          # template for new projects
@@ -31,6 +32,7 @@ in every repo:
 ```bash
 echo "research.md" >> ~/.gitignore_global
 echo "plan.md" >> ~/.gitignore_global
+echo "pr-description.md" >> ~/.gitignore_global
 echo "CLAUDE.local.md" >> ~/.gitignore_global
 git config --global core.excludesfile ~/.gitignore_global
 ```
@@ -42,6 +44,10 @@ git config --global core.excludesfile ~/.gitignore_global
 - `/implement — go ahead` — after annotating and approving plan.md
   (the `— go ahead` is intentional — it signals the plan is approved and
   Claude should proceed without further checking)
+  Claude pauses after each phase — review the diff, commit if satisfied, then
+  tell Claude to continue
+- `/pr-description` — when you're done, generates `pr-description.md` with a
+  description of the change, modified components, and tests added or updated
 
 To activate a project context, create a gitignored CLAUDE.local.md in the
 repo root:

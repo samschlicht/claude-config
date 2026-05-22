@@ -28,8 +28,7 @@ If unsure whether something is trivial, treat it as non-trivial.
 
 - Never commit directly to main, master, or staging — if somehow on one of these branches, stop and 
   flag it immediately
-- Commit at the end of each completed phase (research, plan, implementation)
-- Use short WIP commits as checkpoints during long implementation sessions
+- During implementation: stop at the end of each phase, present a short summary, and wait for the user to review and commit before continuing
 - Commit messages: imperative mood, present tense ("Add pagination" not "Added pagination")
 - When something goes wrong, revert cleanly rather than patching over bad state
 

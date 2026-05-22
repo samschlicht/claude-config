@@ -11,7 +11,9 @@ in `plan.md`. The plan must include:
 - Every file that will change, and how
 - Code snippets showing the key changes (not pseudocode — actual code)
 - Anything that could go wrong and how to handle it
-- A granular todo list at the end, broken into phases and individual tasks
+- A granular todo list at the end, broken into phases and individual tasks;
+  each phase should represent a reasonably sized, coherent unit of work that
+  could stand alone as a commit
 
 Do not implement. The plan is the deliverable for this phase.
 

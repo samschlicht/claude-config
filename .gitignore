@@ -4,3 +4,12 @@ claude/shell-snapshots/
 claude/projects/
 claude/history.jsonl
 claude/settings.json
+claude/cache/
+claude/mcp-needs-auth-cache.json
+claude/file-history/
+claude/image-cache/
+claude/paste-cache/
+claude/.last-cleanup
+claude/.update.lock
+.DS_Store
+.idea/

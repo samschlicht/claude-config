@@ -98,8 +98,10 @@ Ask yourself:
    Do not let Claude patch over a bad direction.
 5. If something goes badly wrong: revert cleanly, narrow the scope, re-approach.
    Patching a bad implementation is usually more expensive than reverting it.
-6. When done and green, review the commit message before accepting it
-7. If interrupted and resuming: `carry on from where you stopped`
+6. After each phase, Claude will pause with a summary — review the diff, commit
+   if satisfied, then tell Claude to continue
+7. When all phases are done, type `/pr-description` to generate `pr-description.md`
+8. If interrupted and resuming: `carry on from where you stopped`
 
 ---
 
@@ -127,19 +129,22 @@ Ask yourself:
 
 ## Before opening a PR
 
-Use Claude Code to review your own diff before human reviewers see it.
+1. If you haven't already, type `/pr-description` — Claude will write
+   `pr-description.md` with a description of the change, modified components,
+   and tests added or updated. Use this as the body of your PR.
 
-1. Check the base branch for this repo — it varies by project. For Talent
+2. Use Claude Code to review your own diff before human reviewers see it.
+   Check the base branch for this repo — it varies by project. For Talent
    Catalog it's `staging`. If unsure: `git remote show origin | grep HEAD`
 
-2. Save the diff to a temp file:
+3. Save the diff to a temp file:
    `git diff [base-branch] > /tmp/pr-diff.txt`
 
-3. In Claude Code:
-   `review the diff in /tmp/pr-diff.txt — check against AGENTS.md conventions,
-   flag any bugs, code quality issues, or anything that shouldn't go to review`
+4. In Claude Code:
+   `review the diff in /tmp/pr-diff.txt — flag any bugs, code quality issues, or anything that 
+    shouldn't go to review`
 
-4. Address anything worth fixing before pushing
+5. Address anything worth fixing before pushing
 
 For small diffs you can also pipe directly to clipboard and paste:
 `git diff [base-branch] | pbcopy`
@@ -219,5 +224,4 @@ git push
 | Wrong direction             | Interrupt, correct tersely, revert if needed                        |
 | Plan invalidated mid-impl   | Stop, fix plan.md, re-trigger                                       |
 | Session gone wrong          | `git checkout .` then start phase again                             |
-| Before opening a PR         | `git diff [base-branch] > /tmp/pr-diff.txt`, review in Claude Code |
-| Getting a PR description    | `write a PR description from plan.md`                               |
+| Before opening a PR         | `/pr-description`, then review diff in Claude Code                  |
