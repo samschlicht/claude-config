@@ -1,3 +1,6 @@
+# un-ignore the command definition — the global gitignore excludes pr-description.md outputs
+!claude/commands/pr-description.md
+
 claude/backups/
 claude/sessions/
 claude/shell-snapshots/
