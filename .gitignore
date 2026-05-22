@@ -9,6 +9,8 @@ claude/mcp-needs-auth-cache.json
 claude/file-history/
 claude/image-cache/
 claude/paste-cache/
+claude/session-env/
+claude/telemetry/
 claude/.last-cleanup
 claude/.update.lock
 .DS_Store
